@@ -28,10 +28,15 @@ fn calculate_mode(numbers: &Vec<i32>) -> i32 {
 }
 
 fn get_highest_value(map: &HashMap<i32, u32>) -> i32 {
-    let result = map.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k);
+    let result = map
+        .iter() // create an iteration through the map
+        .max_by(|a, b| a.1.cmp(&b.1)) // find max by a.1 (where 1 is an index for value in (key,value)) compared with b.1
+        .map(|(k, _v)| k); // map to (key, value) and return key
+
+    // result will be an option where we always expect to have a Some. If none, error.
     match result {
         Some(num) => *num,
-        None => -1000,
+        None => panic!("Could not calculate a mode for the list of integers!"),
     }
 }
 
