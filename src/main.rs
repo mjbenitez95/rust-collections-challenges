@@ -1,8 +1,16 @@
 use rand::Rng;
-use std::collections::HashMap;
+
+const NUM_INTEGERS: u32 = 30;
+const LIST_MIN: i32 = -10;
+const LIST_MAX: i32 = 10;
 
 fn create_random_list(num_integers: u32) -> Vec<i32> {
-    vec![0, 1, 2, 3, 4, 5]
+    let mut rng = rand::thread_rng();
+    let mut vals: Vec<i32> = (0..num_integers)
+        .map(|_| rng.gen_range(LIST_MIN, LIST_MAX))
+        .collect();
+    vals.sort();
+    vals
 }
 
 fn calculate_mean(numbers: &Vec<i32>) -> f32 {
@@ -11,9 +19,9 @@ fn calculate_mean(numbers: &Vec<i32>) -> f32 {
 
 fn main() {
     // given a list of integers, use a vector and return the mean, median, and mode
-    let num_integers = 30;
-    let list_of_integers: Vec<i32> = create_random_list(num_integers);
+    let list_of_integers: Vec<i32> = create_random_list(NUM_INTEGERS);
     let mean = calculate_mean(&list_of_integers);
 
-    println!("The mean of {:?} is: {}!", list_of_integers, mean);
+    println!("With {:?}, we have: ", list_of_integers);
+    println!("  Mean: {}.", mean);
 }
