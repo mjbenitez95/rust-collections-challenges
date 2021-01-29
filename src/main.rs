@@ -1,14 +1,14 @@
 use rand::Rng;
 use std::collections::HashMap;
 
-const NUM_INTEGERS: u32 = 30;
-const LIST_MIN: i32 = -10;
-const LIST_MAX: i32 = 10;
+const NUM_INTEGERS: u32 = 100;
+const LIST_MIN: i32 = 0;
+const LIST_MAX: i32 = 100;
 
 fn create_random_list(num_integers: u32) -> Vec<i32> {
     let mut rng = rand::thread_rng();
     let mut vals: Vec<i32> = (0..num_integers)
-        .map(|_| rng.gen_range(LIST_MIN, LIST_MAX))
+        .map(|_| rng.gen_range(LIST_MIN, LIST_MAX + 1))
         .collect();
     vals.sort();
     vals
@@ -41,7 +41,17 @@ fn get_highest_value(map: &HashMap<i32, u32>) -> i32 {
 }
 
 fn calculate_median(numbers: &Vec<i32>) -> f32 {
-    2.5
+    let num_elements = numbers.len();
+
+    if num_elements % 2 == 0 {
+        let middle = num_elements / 2;
+        calculate_mean(&vec![
+            numbers[middle - 1],
+            numbers[middle],
+        ])
+    } else {
+        numbers[num_elements / 2] as f32
+    }
 }
 
 fn main() {
