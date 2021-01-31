@@ -128,10 +128,11 @@ fn main() {
     }
 
     let words_list = user_input.split(" ").collect::<Vec<&str>>();
+    let mut pig_latinized = String::new();
     for word in words_list {
-        let pig_latinized = pig_latinize(&word);
-        println!("The pig latin of {} is {}!", word, pig_latinized);
+        pig_latinized = pig_latinized + " " + &pig_latinize(&word);
     }
+    println!("Your sentence in pig latin is:{}.", pig_latinized);
 
     /*
         Using a hash map and vectors, create a text interface to allow a user
