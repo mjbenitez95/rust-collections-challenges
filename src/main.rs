@@ -51,6 +51,43 @@ fn calculate_median(numbers: &Vec<i32>) -> f32 {
     }
 }
 
+const VOWELS: &str = "aeiou";
+
+fn pig_latinize(word: &str) -> String {
+    let (consonants, remains) = word.split_at(get_consonant_count(word));
+
+    if consonants.is_empty() {
+        format!("{}-hay", remains)
+    } else {
+        format!("{}-{}ay", remains, consonants)
+    }
+}
+
+fn get_consonant_count(word: &str) -> usize {
+    if word.is_empty() {
+        return 0;
+    }
+
+    let mut count = 0;
+    for i in 0..word.len() - 1 {
+        let current = word.chars().nth(i).unwrap();
+        let next = word.chars().nth(i + 1).unwrap();
+
+        if VOWELS.contains(current) {
+            return count;
+        }
+        if current == 'q' && next == 'u' {
+            return count + 2;
+        }
+        count += 1;
+        if next == 'y' {
+            return count;
+        }
+    }
+
+    return count;
+}
+
 fn main() {
     /*
         Given a list of integers, use a vector and return the mean (the average
@@ -76,6 +113,15 @@ fn main() {
         (“apple” becomes “apple-hay”). Keep in mind the details about UTF-8
         encoding!
     */
+    let words_list: Vec<&str> = vec![
+        "matthew", "went", "to", "the", "store", "and", "got", "a", "piece", "of",
+        "candy", "then", "he", "went", "home", "to", "play", "some", "counter", "strike", "with",
+        "his", "younger", "brother",
+    ];
+    for word in words_list {
+        let pig_latinized = pig_latinize(&word);
+        println!("The pig latin of {} is {}!", word, pig_latinized);
+    }
 
     /*
         Using a hash map and vectors, create a text interface to allow a user
