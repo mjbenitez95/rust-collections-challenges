@@ -89,6 +89,23 @@ fn get_consonant_count(word: &str) -> usize {
     return count;
 }
 
+fn read_input_to_pig_latinize() -> String {
+    let mut user_input = String::new();
+    println!("Please type a sentence with no punctuation or capitalization: ");
+    print!("  >");
+    let _ = stdout().flush();
+    stdin()
+        .read_line(&mut user_input)
+        .expect("Please enter a valid string!");
+    if let Some('\n') = user_input.chars().next_back() {
+        user_input.pop();
+    }
+    if let Some('\r') = user_input.chars().next_back() {
+        user_input.pop();
+    }
+    user_input
+}
+
 fn main() {
     /*
         Given a list of integers, use a vector and return the mean (the average
@@ -114,25 +131,17 @@ fn main() {
         (“apple” becomes “apple-hay”). Keep in mind the details about UTF-8
         encoding!
     */
-    let mut user_input = String::new();
-    print!("Please type a sentence with no punctuation: ");
-    let _ = stdout().flush();
-    stdin()
-        .read_line(&mut user_input)
-        .expect("Please enter a valid string!");
-    if let Some('\n') = user_input.chars().next_back() {
-        user_input.pop();
-    }
-    if let Some('\r') = user_input.chars().next_back() {
-        user_input.pop();
-    }
-
+    let user_input = read_input_to_pig_latinize();
     let words_list = user_input.split(" ").collect::<Vec<&str>>();
+    
     let mut pig_latinized = String::new();
     for word in words_list {
         pig_latinized = pig_latinized + " " + &pig_latinize(&word);
     }
+    
+    println!("");
     println!("Your sentence in pig latin is:{}.", pig_latinized);
+    println!("");
 
     /*
         Using a hash map and vectors, create a text interface to allow a user
