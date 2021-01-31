@@ -133,12 +133,12 @@ fn main() {
     */
     let user_input = read_input_to_pig_latinize();
     let words_list = user_input.split(" ").collect::<Vec<&str>>();
-    
+
     let mut pig_latinized = String::new();
     for word in words_list {
         pig_latinized = pig_latinized + " " + &pig_latinize(&word);
     }
-    
+
     println!("");
     println!("Your sentence in pig latin is:{}.", pig_latinized);
     println!("");
