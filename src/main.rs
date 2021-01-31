@@ -1,5 +1,6 @@
 use rand::Rng;
 use std::collections::HashMap;
+use std::io::{stdin, stdout, Write};
 
 const NUM_INTEGERS: u32 = 20;
 const LIST_MIN: i32 = -100;
@@ -113,11 +114,20 @@ fn main() {
         (“apple” becomes “apple-hay”). Keep in mind the details about UTF-8
         encoding!
     */
-    let words_list: Vec<&str> = vec![
-        "matthew", "went", "to", "the", "store", "and", "got", "a", "piece", "of",
-        "candy", "then", "he", "went", "home", "to", "play", "some", "counter", "strike", "with",
-        "his", "younger", "brother",
-    ];
+    let mut user_input = String::new();
+    print!("Please type a sentence with no punctuation: ");
+    let _ = stdout().flush();
+    stdin()
+        .read_line(&mut user_input)
+        .expect("Please enter a valid string!");
+    if let Some('\n') = user_input.chars().next_back() {
+        user_input.pop();
+    }
+    if let Some('\r') = user_input.chars().next_back() {
+        user_input.pop();
+    }
+
+    let words_list = user_input.split(" ").collect::<Vec<&str>>();
     for word in words_list {
         let pig_latinized = pig_latinize(&word);
         println!("The pig latin of {} is {}!", word, pig_latinized);
